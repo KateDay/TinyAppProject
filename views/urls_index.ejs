@@ -9,11 +9,16 @@
   <title>TinyApp</title>
 </head>
 <body style="font-size:20px; padding:50px;">
-    <!-- Add EJS code here -->
+    <header>
+        <% include ./partials/_header %>
+    </header>
+    
     <h1>My URLs</h1>
+    <ul>
     <% for(let key in urls){%>
-       <p>ShortUrl: <%= key%> LongUrl: <%= urls[key]%></p>
-        
+    <li><strong><%= key%>: </strong> <%= urls[key]%></li>
+    
     <%}%>
+    </ul>
 </body>
 </html>
