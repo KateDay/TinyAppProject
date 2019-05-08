@@ -7,14 +7,15 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</title>
+
 </head>
 <body style="font-size:20px; padding:50px;">
   <header>
     <% include ./partials/_header %>
   </header>
   <p>
-    <li><strong> TinyURL for: </strong><%=longURL%> <strong>is:</strong></li> 
-    <li> <%=shortURL%></li>
+   <h2><strong> TinyURL for: </strong><%=longURL%> <strong>is:</strong></h2>
+    <a href="/u/<%= shortURL%>" target="blank" ><li> <%=shortURL%></li></a>  
   </p> 
 </body>
 </html>
