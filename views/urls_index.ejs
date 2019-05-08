@@ -17,11 +17,12 @@
         <ul>
         <% for(let key in urls){%>
         <li><strong><%= key%>: </strong> <%= urls[key]%></li>
+        <form method="POST" action="/urls/<%= key %>/delete">
+		    <input type="submit" value="Delete">
+	    </form>
         <%}%>
         </ul>
     </p>
-    <form method="POST" action="/urls/9sm5xK/delete">
-		<input type="submit" value="Delete">
-	</form>
+    
 </body>
 </html>
