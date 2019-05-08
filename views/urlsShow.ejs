@@ -17,5 +17,15 @@
    <h2><strong> TinyURL for: </strong><%=longURL%> <strong>is:</strong></h2>
     <a href="/u/<%= shortURL%>" target="blank" ><li> <%=shortURL%></li></a>  
   </p> 
+
+  <form class="form-inline" method="POST" action="/urls/<%=shortURL%>/update">
+     <div class="form-group mb-2">
+            <%# <label for="longURL">Update your URL:</label> %>
+            <input class="form-control" type="text" name="longURL" 
+              placeholder="Change Your URL" style="width: 300px; margin: 1em">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+	</form>
+
 </body>
 </html>

@@ -16,13 +16,36 @@
         <h1>My URLs</h1>
         <ul>
         <% for(let key in urls){%>
-        <li><strong><%= key%>: </strong> <%= urls[key]%></li>
-        <form method="POST" action="/urls/<%= key %>/delete">
-		    <input type="submit" value="Delete">
-	    </form>
+        <li>
+            <div style="display: inline-block; width: 400px; overflow-wrap: break-word;">
+                <strong><%= key%>: </strong> <%= urls[key]%>
+            </div>
+            <form
+                class="form-inline"
+                method="POST"
+                action="/urls/<%= key %>/delete"
+                style="display: inline-block;"
+            >
+                <input class="form-control" type="submit" 
+                    value="Delete 🗑️"style="width: 150px; margin: 1em">
+            </form>
+            
+            <form
+                class="form-inline"
+                method="GET"
+                action="/urls/<%= key %>"
+                style="display: inline-block;"
+            >
+                <button type="submit" class="btn btn-primary"
+                        style="width: 150px; margin: 1em" >
+                    Edit
+                </button>               
+            </form>
+        </li>    
         <%}%>
         </ul>
     </p>
     
 </body>
 </html>
+
