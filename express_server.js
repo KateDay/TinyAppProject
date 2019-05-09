@@ -13,6 +13,19 @@ const urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+const users = { 
+    "userRandomID": {
+      id: "userRandomID", 
+      email: "user@example.com", 
+      password: "purple-monkey-dinosaur"
+    },
+   "user2RandomID": {
+      id: "user2RandomID", 
+      email: "user2@example.com", 
+      password: "dishwasher-funk"
+    }
+}
+
 
 app.get("/", (req, res) => {
   res.redirect("/urls");
@@ -56,8 +69,12 @@ app.get("/urls/:shortURL", (req, res) => {
 app.get("/u/:shortURL", (req, res) => {
     const longURL = urlDatabase[req.params.shortURL];
     res.redirect("http://" + longURL);
-  });
+});
 
+
+app.get("/register", (req, res) => {
+    res.render("registration");
+});
 
 function generateRandomString() {
     let result           = '';
@@ -92,7 +109,10 @@ app.post("/urls/:shortURL/update", (req, res) => {
 
 app.post("/login",(req, res) => {
     let login = req.body.username;
-    res.cookie("username", req.body.username)
+    let password = req.body.password;
+
+    res.cookie("password", password)
+    res.cookie("username", login)
     console.log(`Username is: ${login}`);
     res.redirect("/urls");
 })
@@ -100,9 +120,27 @@ app.post("/login",(req, res) => {
 app.post("/logOut",(req, res) => {
     console.log(`${req.body.username} has logged out.`);
     res.clearCookie("username");
+    res.redirect("/register");
+})
+
+app.post("/register",(req, res) => {
+    let email = req.body.email;
+    let password = bcrypt.HashSync(req.body.password);//this is where I HASH
+
+    res.cookie("password", password)
+    res.cookie("email",email)
+    console.log(`Username is: ${email + password}`);
     res.redirect("/urls");
 })
 
+
+
+
+// app.post("/logOut",(req, res) => {
+//     console.log(`${req.body.username} has logged out.`);
+//     res.clearCookie("username");
+//     res.redirect("/register");
+// })
 
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`);
