@@ -1,5 +1,39 @@
 <!-- views/partials/header.ejs -->
 
-<a href="/" ><h1>TinyApp</h1></a>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <a href="/" ><h1>TinyApp</h1></a>
+        <a class="hideOnShow" href="http://localhost:8080/urls/new">Create a New TinyURL</a>   
+    </div>
 
-<a class="hideOnShow" href="http://localhost:8080/urls/new">Create a New TinyURL</a>
+<%if (username) {%> 
+     <h2>
+        Hello, <%=username%>!
+     </h2>
+    <form class="form-inline" 
+            action="/logOut" 
+            method="POST">
+    <div class="form-group mb-2">
+     <button type="submit" class="btn btn-primary">Log Out</button>
+        </div>
+</form>    
+<%} else {%>
+
+   
+    <form class="form-inline" 
+            action="/login" 
+            method="POST">
+        <div class="form-group mb-2">
+        <input class="form-control" 
+                type="text" 
+                name="username" 
+                placeholder="Sign In" 
+                style="width: 300px; margin: 1em">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+
+<%}%>
+  </div>
+</nav>
