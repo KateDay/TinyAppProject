@@ -8,11 +8,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.set("view engine", "ejs");
 
-const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
-};
-
 const users = { 
     "userRandomID": {
       id: "userRandomID",
@@ -24,6 +19,11 @@ const users = {
       email: "user2@example.com", 
       password: "dishwasher-funk"
     }
+};
+
+const urlDatabase = {
+    b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
+    i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
 };
 
 function generateRandomString() {
@@ -55,7 +55,6 @@ function userLookup (email) {
 }
 
 
-
 app.get("/", (req, res) => {
   res.redirect("/register");
 });
@@ -70,7 +69,7 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-    console.log(req.cookies);
+    //console.log(req.cookies);
     if (!req.cookies.userId) {
         res.redirect("/register");
     } else {
