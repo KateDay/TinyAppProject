@@ -57,7 +57,7 @@ function userLookup (email) {
 
 
 app.get("/", (req, res) => {
-  res.redirect("/urls");
+  res.redirect("/register");
 });
 
 
@@ -71,37 +71,53 @@ app.get("/hello", (req, res) => {
 
 app.get("/urls", (req, res) => {
     console.log(req.cookies);
-    let templateVars = { 
-    urls: urlDatabase,    
-    userId: req.cookies["userId"],
-    email: req.cookies["email"]
-    };
-  res.render("urls_index", templateVars);
+    if (!req.cookies.userId) {
+        res.redirect("/register");
+    } else {
+        let templateVars = { 
+        urls: urlDatabase,    
+        userId: req.cookies["userId"],
+        email: req.cookies["email"]
+        };
+    res.render("urls_index", templateVars);
+    }
 });
 
 app.get("/urls/new", (req, res) => {
+    if (!req.cookies.userId) {
+        res.redirect("/register");
+    } else {
     let templateVars = { 
         shortURL: req.params.shortURL,
         longURL: urlDatabase[req.params.shortURL],
         userId: req.cookies["userId"],
         email: req.cookies["email"]
-    };
+         };
     res.render("urls_new", templateVars);
+    }
 });
 
 app.get("/urls/:shortURL", (req, res) => {
+    if (!req.cookies.userId) {
+        res.redirect("/register");
+    } else {
     let templateVars = { 
       shortURL: req.params.shortURL,
       longURL: urlDatabase[req.params.shortURL],
       userId: req.cookies["userId"],
       email: req.cookies["email"]
-    };
-  res.render("urlsShow", templateVars);
+        };
+    res.render("urlsShow", templateVars);
+    }
 });
 
 app.get("/u/:shortURL", (req, res) => {
-    const longURL = urlDatabase[req.params.shortURL];
-    res.redirect("http://" + longURL);
+    if (!req.cookies.userId) {
+        res.redirect("/register");
+    } else {
+        const longURL = urlDatabase[req.params.shortURL];
+        res.redirect("http://" + longURL);
+    }
 });
 
 app.get("/register", (req, res) => {
