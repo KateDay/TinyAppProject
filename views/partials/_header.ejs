@@ -7,9 +7,9 @@
         <a class="hideOnShow" href="http://localhost:8080/urls/new">Create a New TinyURL</a>   
     </div>
 
-<%if (userId) {%> 
+<%if (user) {%> 
      <h2>
-        Logged in as: <%= email %>
+        Logged in as: <%= user.email %>
      </h2>
     <form class="form-inline" 
             action="/logOut" 
