@@ -172,10 +172,9 @@ app.post("/urls/:shortURL/update", (req, res) => {
 });
 
 app.post("/login",(req, res) => {
-    console.log("THIS IS THE BODY", req.body);
     let email = req.body.email;
-    let password = req.body.password;
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    let password = bcrypt.hashSync(req.body.password, saltRounds);
+   
     
     let id = generateRandomID();
     
@@ -185,8 +184,7 @@ app.post("/login",(req, res) => {
     
     // let login = req.body.email;
 
-
-    if( bcrypt.compareSync(email, hashedPassword)) {
+    if( bcrypt.compareSync(email, password)) {
         res.status(403).render("registration")
         } else if ( userDB.email !== email ){
         res.status(403).redirect("/register")
@@ -196,11 +194,10 @@ app.post("/login",(req, res) => {
         res.redirect("/urls");
         } 
 
-
+        console.log(user);
 });
 
 app.post("/logOut",(req, res) => {
-    console.log(`${req.body.email} has logged out.`);
     res.clearCookie("userId");
     res.redirect("/register");
 });
@@ -222,9 +219,8 @@ app.post("/register",(req, res) => {
         console.log(`user is: ${email} and Password is:${password}`);
         res.redirect("/urls");
         } 
+        console.log(user);
 });
-
-console.log(users);
 
 app.listen(PORT, () => {
     console.log(`TinyApp listening on port ${PORT}!`);
