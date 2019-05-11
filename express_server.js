@@ -3,6 +3,9 @@ const app = express();
 const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -139,6 +142,7 @@ app.get("/register", (req, res) => {
     res.render("registration");
 });
 
+
 app.post("/urls", (req, res) => {
    console.log(req.body);  // Log the POST request body to the console
     let randString = generateRandomString();
@@ -170,19 +174,19 @@ app.post("/urls/:shortURL/update", (req, res) => {
 app.post("/login",(req, res) => {
     console.log("THIS IS THE BODY", req.body);
     let email = req.body.email;
-    console.log(email);
     let password = req.body.password;
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    
     let id = generateRandomID();
     
     let user = { id, email, password }; 
     users[id] = user;
-    
     let userDB = userLookup(email)
     
     // let login = req.body.email;
 
 
-    if( userDB.password !== password ) {
+    if( bcrypt.compareSync(email, hashedPassword)) {
         res.status(403).render("registration")
         } else if ( userDB.email !== email ){
         res.status(403).redirect("/register")
@@ -203,9 +207,9 @@ app.post("/logOut",(req, res) => {
 
 app.post("/register",(req, res) => {
     let email = req.body.email;
-    let password = req.body.password;
     let id = generateRandomID();
     let userDB = userLookup(email)
+    let password = bcrypt.hashSync(req.body.password, saltRounds)
     
     let user = { id, email, password }; 
     users[id] = user;
@@ -223,5 +227,5 @@ app.post("/register",(req, res) => {
 console.log(users);
 
 app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}!`);
+    console.log(`TinyApp listening on port ${PORT}!`);
 });
