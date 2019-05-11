@@ -8,17 +8,17 @@
     </div>
 
 <%if (user) {%> 
-     <h2>
-        Logged in as: <%= user.email %>
-     </h2>
-    <form class="form-inline" 
-            action="/logOut" 
-            method="POST">
-    <div class="form-group mb-2">
-     <button type="submit" class="btn btn-primary">Log Out</button>
-        </div>
-    </form>    
-    
+  <h2>
+    Welcome back <strong><%= user.email %></strong>!
+  </h2>
+  <form class="form-inline" 
+          action="/logOut" 
+          method="POST">
+  <div class="form-group mb-2">
+    <button type="submit" class="btn btn-primary">Log Out</button>
+  </div>
+  </form>    
+
 <%} else {%> 
     <div class="container">
     <form class="form-inline" 
