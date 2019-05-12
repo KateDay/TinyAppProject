@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const cookieSession = require('cookie-session');
 
-
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(cookieSession({
@@ -71,6 +71,7 @@ function urlsForUser(loggedInId){
     return dBforUser;
 }
 
+
 app.get("/", (req, res) => {
   res.redirect("/register");
 });
@@ -86,6 +87,10 @@ app.get("/u", (req, res) => {
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
+
+app.get("/image", (req, res) => {
+    res.render(image);
+   });
 
 app.get("/urls", (req, res) => {
     if (!req.session.userId) {
@@ -181,13 +186,14 @@ app.post("/login",(req, res) => {
 
     if(userDB) { 
 // check password.... if that's true login otherwise say try again'
-        if (bcrypt.compareSync(req.body.password, userDB.password)) {
-            req.session.userId = userDB.id;   
-            console.log(`user ${email} is logged in`);
-            res.redirect("/urls");
-        } else {
-            res.status(400 + "Oops try again").render("registration")
-        }    
+    if (bcrypt.compareSync(req.body.password, userDB.password)) {
+        req.session.userId = userDB.id;   
+        console.log(`user ${email} is logged in`);
+        res.redirect("/urls");
+    } else {
+        // window.alert("Oops, try again")
+        res.render("registration")
+    }    
     } else {res.status(400 + "Oops try again").render("registration")
     }
 });
