@@ -1,13 +1,13 @@
 {
   "name": "tinyappproject",
   "version": "1.0.0",
-  "description": "",
+  "description": "The app to make urls shorter",
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon -L express_server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Kate Day",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "2.0.0",
