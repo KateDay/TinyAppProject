@@ -1,7 +1,7 @@
 # Welcome to TinyApp
 ## The app that makes your urls smaller.
 
-TInyApp is a full stack web app that that shortens a long url, built with express and Node.
+TInyApp is a full stack web app that that shortens a long url, built with Express and Node.
 
 
 ## Dependancies:
