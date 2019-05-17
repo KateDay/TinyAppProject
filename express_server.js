@@ -79,6 +79,7 @@ app.get("/", (req, res) => {
 app.get("/urls.json", (req, res) => {
     res.json(urlDatabase);
 });
+
 app.get("/u", (req, res) => {
     res.json(users);
 });
@@ -97,8 +98,6 @@ app.get("/urls", (req, res) => {
         };
     res.render("urls_index", templateVars);
     }
-
-    console.log("this is the reqSession: " + req.session.userId);
 });
 
 app.get("/urls/new", (req, res) => {
