@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const cookieSession = require('cookie-session');
 
-app.use(express.static("/public"));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(cookieSession({
@@ -85,11 +85,6 @@ app.get("/u", (req, res) => {
 
 app.get("/hello", (req, res) => {
     res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
-
-app.get("/image", (req, res) => {
-
-    res.render("Tiny.jpg");
 });
 
 app.get("/urls", (req, res) => {
