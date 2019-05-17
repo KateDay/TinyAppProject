@@ -131,10 +131,8 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-
     const longURL = urlDatabase[req.params.shortURL].longURL;
-console.log("the get for /:short" + longURL);
-    res.redirect("http://" + longURL);
+    res.redirect(longURL);
 });
 
 app.get("/register", (req, res) => {
@@ -198,21 +196,22 @@ app.post("/logOut",(req, res) => {
 
 app.post("/register",(req, res) => {
     let email = req.body.email;
-    let id = generateRandomID();
+    let pWord = req.body.password;
     let userDB = userLookup(email)
-    let password = bcrypt.hashSync(req.body.password, saltRounds)
-
-    let user = { id, email, password };
-    users[id] = user;
-
-
-    if(email == '' || password == '') {
+    
+    if(email == '' || pWord == '' || userDB) {
         res.status(400).render("registration")
-        } else if ( email !== userDB ){
-            req.session.userId = id;
-            res.redirect("/urls");
-        }
-        console.log(user);
+    } else {
+        let id = generateRandomID();
+        let password = bcrypt.hashSync(req.body.password, saltRounds)
+        
+    // Adding the user to the DB
+        let user = { id, email, password };
+        users[id] = user;
+        
+        req.session.userId = id;
+        res.redirect("/urls");
+    }    
 });
 
 // Port Listening
