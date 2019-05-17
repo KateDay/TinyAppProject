@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 8080; // default port 8080
+const PORT = 8081; // default port 8081
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -181,7 +181,7 @@ app.post("/urls/:shortURL/update", (req, res) => {
 app.post("/login",(req, res) => {
     let email = req.body.email;
     let password = bcrypt.hashSync(req.body.password, saltRounds);
-    let userDB = userLookup(email)
+    let userDB = userLookup(email);
 
     if(userDB) {
         if (bcrypt.compareSync(req.body.password, userDB.password)) {
@@ -189,13 +189,11 @@ app.post("/login",(req, res) => {
             console.log(`user ${email} is logged in`);
             res.redirect("/urls");
         } else {
-            alert("Ooops try again")
-            res.render("registration")
-        }
-        } else {
-            alert("Oops, try again")
-            res.status(400).render("registration")
-    }
+            res.send("<h1>Ooops, try again!</h1>")
+        } 
+    } else {
+        res.send("<h1>Ooops, try again!</h1>")
+    };
 });
 
 app.post("/logOut",(req, res) => {
